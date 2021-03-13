@@ -8,7 +8,7 @@
         <h5 class="mr-3 font-weight-normal justify-content-start">
             <a class="p-2 text-dark" href="{% url 'home' %}">Home</a>
         </h5>
-        <form class="search-bar justify-content-start">
+        <form class="search-bar justify-content-start" onsubmit="return executeQuery();">
             <input type="text" class="form-control" name="q" id="id_q_large" placeholder="Search...">
         </form>
 
@@ -50,16 +50,16 @@
                                      aria-expanded="false" src="{{ request.user.profile_image.url }}"
                                      alt="codingwithmitch logo" width="40" height="40">
                                 <div class="dropdown-menu" aria-labelledby="id_profile_links">
-                                    <a class="dropdown-item" href="#">Account</a>
-                                    <a class="dropdown-item" href="#">Logout</a>
+                                    <a class="dropdown-item" href="{% url 'account:view' user_id=request.user.id %}">Account</a>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                                 </div>
                             </div>
                         </div>
 
                     </div>
                 {% else %}
-                    <a class="p-2 text-dark" href="#">Login</a>
-                    <a class="btn btn-outline-primary" href="#">Register</a>
+                    <a class="p-2 text-dark" href="{% url 'login' %}">Login</a>
+                    <a class="btn btn-outline-primary" href="{% url 'register' %}">Register</a>
                 {% endif %}
             </nav>
         </div>
@@ -71,7 +71,7 @@
         <h5 class="font-weight-normal">
             <a class="p-2 text-dark" href="{% url 'home' %}">Home</a>
         </h5>
-        <form class="search-bar justify-content-start">
+        <form class="search-bar justify-content-start" onsubmit="return executeQuery();">
             <input type="text" class="form-control" name="q" id="id_q_small" placeholder="Search...">
         </form>
         <div class="d-flex flex-row-reverse flex-grow-1">
@@ -85,18 +85,39 @@
                                      aria-expanded="false" src="{{ request.user.profile_image.url }}"
                                      alt="codingwithmitch logo" width="40" height="40">
                                 <div class="dropdown-menu" aria-labelledby="id_profile_links">
-                                    <a class="dropdown-item" href="#">Account</a>
-                                    <a class="dropdown-item" href="#">Logout</a>
+                                    <a class="dropdown-item" href="{% url 'account:view' user_id=request.user.id %}">Account</a>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 {% else %}
-                    <a class="p-2 text-dark" href="#">Login</a>
-                    <a class="btn btn-outline-primary m-2" href="#">Register</a>
+                    <a class="p-2 text-dark" href="{% url 'login' %}">Login</a>
+                    <a class="btn btn-outline-primary m-2" href="{% url 'register' %}">Register</a>
                 {% endif %}
             </nav>
         </div>
     </div>
     <!-- END SMALL SCREENS -->
 </div>
+
+
+<script type="text/javascript">
+    function executeQuery() {
+        var query = ""
+        query = document.getElementById('id_q_small').value;
+        if (query == "") {
+            query = document.getElementById('id_q_large').value;
+        }
+        window.location.replace("{% url 'search' %}?q=" + query)
+        return false
+    }
+
+</script>
+
+
+
+
+
+
+
